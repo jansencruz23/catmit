@@ -139,24 +139,28 @@
     "package": "vsce package"
   },
   "dependencies": {
-    "ai": "^4.0.0",
-    "@ai-sdk/openai": "^1.0.0",
     "@ai-sdk/anthropic": "^1.0.0",
     "@ai-sdk/google": "^1.0.0",
+    "@ai-sdk/openai": "^1.0.0",
+    "@inkjs/ui": "^2.0.0",
+    "@types/react": "^19.2.14",
+    "ai": "^4.0.0",
+    "commander": "^13.0.0",
+    "ink": "^6.8.0",
     "ollama-ai-provider": "^1.0.0",
-    "simple-git": "^3.27.0",
-    "commander": "^13.0.0"
+    "react": "^19.2.4",
+    "simple-git": "^3.27.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
-    "@types/vscode": "^1.85.0",
     "@types/node": "^20.0.0",
-    "esbuild": "^0.24.0",
-    "@vscode/vsce": "^3.0.0",
-    "vitest": "^3.0.0",
-    "eslint": "^9.0.0",
+    "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "prettier": "^3.0.0"
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
   }
 }
