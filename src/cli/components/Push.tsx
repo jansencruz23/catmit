@@ -5,6 +5,7 @@ import { resolveConfigAsync } from '../../core/config';
 import { stageAll, getStagedDiff, commitWithMessage, push } from '../../core/git';
 import { generateCommitMessage } from '../../core/generate';
 import { useRotatingMessage } from './useRotatingMessage';
+import { useExitOnDone } from './useExitOnDone';
 import '../../core/providers';
 import type { CommitFormat } from '../../core/types';
 
@@ -21,6 +22,7 @@ export function Push({ provider, model, format }: PushProps) {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const rotatingStatus = useRotatingMessage(phase === 'generating');
+  useExitOnDone(phase);
 
   useEffect(() => {
     run();

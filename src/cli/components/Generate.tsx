@@ -5,6 +5,7 @@ import { resolveConfigAsync } from '../../core/config';
 import { getStagedDiff, commitWithMessage } from '../../core/git';
 import { generateCommitMessage } from '../../core/generate';
 import { useRotatingMessage } from './useRotatingMessage';
+import { useExitOnDone } from './useExitOnDone';
 import '../../core/providers';
 import type { CommitFormat } from '../../core/types';
 
@@ -23,6 +24,7 @@ export function Generate({ provider, model, format, commit }: GenerateProps) {
   const [error, setError] = useState('');
   const [committed, setCommitted] = useState(false);
   const rotatingStatus = useRotatingMessage(phase === 'generating');
+  useExitOnDone(phase);
 
   useEffect(() => {
     run();

@@ -6,6 +6,7 @@ import { join } from 'path';
 import { homedir } from 'os';
 import { getAvailableProviders, getProviderDefaults } from '../../core/providers';
 import { setApiKeyInKeychain, isKeychainAvailable } from '../../core/keychain';
+import { useExitOnDone } from './useExitOnDone';
 import '../../core/providers';
 import type { ProviderName } from '../../core/types';
 
@@ -13,6 +14,7 @@ type Step = 'provider' | 'model' | 'api-key' | 'ollama-url' | 'save-location' | 
 
 export function Setup() {
   const [step, setStep] = useState<Step>('provider');
+  useExitOnDone(step);
   const [provider, setProvider] = useState('');
   const [model, setModel] = useState('');
   const [apiKey, setApiKey] = useState('');

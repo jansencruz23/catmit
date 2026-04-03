@@ -5,6 +5,7 @@ import { resolveConfigAsync } from '../../core/config';
 import { getLastCommitDiff, getLastCommitMessage, amendCommit } from '../../core/git';
 import { generateCommitMessage } from '../../core/generate';
 import { useRotatingMessage } from './useRotatingMessage';
+import { useExitOnDone } from './useExitOnDone';
 import '../../core/providers';
 import type { CommitFormat } from '../../core/types';
 
@@ -24,6 +25,7 @@ export function Amend({ provider, model, format, apply }: AmendProps) {
   const [error, setError] = useState('');
   const [amended, setAmended] = useState(false);
   const rotatingStatus = useRotatingMessage(phase === 'generating');
+  useExitOnDone(phase);
 
   useEffect(() => {
     run();
