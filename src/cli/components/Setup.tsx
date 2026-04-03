@@ -5,6 +5,7 @@ import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { homedir } from 'os';
 import { getAvailableProviders, getProviderDefaults } from '../../core/providers';
+import { setApiKeyInKeychain, isKeychainAvailable } from '../../core/keychain';
 import '../../core/providers';
 import type { ProviderName } from '../../core/types';
 
@@ -17,6 +18,7 @@ export function Setup() {
   const [apiKey, setApiKey] = useState('');
   const [ollamaUrl, setOllamaUrl] = useState('');
   const [savedPath, setSavedPath] = useState('');
+  const [keySavedToKeychain, setKeySavedToKeychain] = useState(false);
 
   const providers = getAvailableProviders();
 
@@ -49,14 +51,26 @@ export function Setup() {
     setStep('save-location');
   }
 
-  function handleSaveLocation(value: string) {
+  async function handleSaveLocation(value: string) {
     const savePath =
       value === 'global' ? join(homedir(), '.catmitrc.json') : join(process.cwd(), '.catmitrc.json');
 
+    // Save non-sensitive config to .catmitrc.json
     const config: Record<string, string> = { provider };
     if (model) config.model = model;
-    if (apiKey) config.apiKey = apiKey;
     if (ollamaUrl) config.ollamaUrl = ollamaUrl;
+
+    // Try to save API key to OS keychain instead of config file
+    if (apiKey) {
+      const keychainOk = await isKeychainAvailable();
+      if (keychainOk) {
+        await setApiKeyInKeychain(apiKey);
+        setKeySavedToKeychain(true);
+      } else {
+        // Fallback: save in config file if keychain unavailable
+        config.apiKey = apiKey;
+      }
+    }
 
     let existing: Record<string, unknown> = {};
     if (existsSync(savePath)) {
@@ -65,6 +79,11 @@ export function Setup() {
       } catch {
         // Skip malformed
       }
+    }
+
+    // Remove apiKey from existing config if migrating to keychain
+    if (keySavedToKeychain && 'apiKey' in existing) {
+      delete existing.apiKey;
     }
 
     writeFileSync(savePath, JSON.stringify({ ...existing, ...config }, null, 2) + '\n');
@@ -148,6 +167,12 @@ export function Setup() {
       {step === 'done' && (
         <Box flexDirection="column" gap={1}>
           <StatusMessage variant="success">Config saved to {savedPath}</StatusMessage>
+          {keySavedToKeychain && (
+            <StatusMessage variant="success">API key stored securely in OS keychain</StatusMessage>
+          )}
+          {!keySavedToKeychain && apiKey && (
+            <Text color="yellow">⚠ API key saved in {savedPath} (keychain unavailable)</Text>
+          )}
           <Text>
             Run <Text bold color="cyan">catmit</Text> to generate your first commit message!
           </Text>

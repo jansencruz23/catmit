@@ -3,6 +3,7 @@ import { join } from 'path';
 import { homedir } from 'os';
 import type { CatmitConfig } from './types';
 import { DEFAULT_CONFIG } from './types';
+import { getApiKeyFromKeychain } from './keychain';
 
 interface PartialConfig {
   provider?: string;
@@ -67,4 +68,21 @@ export function resolveConfig(overrides?: PartialConfig, cwd?: string): CatmitCo
   };
 
   return merged as CatmitConfig;
+}
+
+/**
+ * Async version that also checks the OS keychain for the API key.
+ * Priority: overrides > keychain > env vars > dotfile > defaults
+ */
+export async function resolveConfigAsync(overrides?: PartialConfig, cwd?: string): Promise<CatmitConfig> {
+  const config = resolveConfig(overrides, cwd);
+
+  if (!config.apiKey) {
+    const keychainKey = await getApiKeyFromKeychain();
+    if (keychainKey) {
+      config.apiKey = keychainKey;
+    }
+  }
+
+  return config;
 }

@@ -18,7 +18,7 @@ const extensionConfig = {
   ...sharedConfig,
   entryPoints: ['src/extension/extension.ts'],
   outfile: 'dist/extension.js',
-  external: ['vscode'],
+  external: ['vscode', '@github/keytar'],
   format: 'cjs',
 };
 

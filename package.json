@@ -166,6 +166,7 @@
     "@ai-sdk/anthropic": "^3.0.66",
     "@ai-sdk/google": "^3.0.57",
     "@ai-sdk/openai": "^3.0.50",
+    "@github/keytar": "^7.10.6",
     "@inkjs/ui": "^2.0.0",
     "@types/react": "^19.2.14",
     "ai": "^6.0.145",

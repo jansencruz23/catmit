@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Text } from 'ink';
 import { Spinner, StatusMessage } from '@inkjs/ui';
-import { resolveConfig } from '../../core/config';
+import { resolveConfigAsync } from '../../core/config';
 import { getLastCommitDiff, getLastCommitMessage, amendCommit } from '../../core/git';
 import { generateCommitMessage } from '../../core/generate';
 import { useRotatingMessage } from './useRotatingMessage';
@@ -30,7 +30,7 @@ export function Amend({ provider, model, format, apply }: AmendProps) {
   }, []);
 
   async function run() {
-    const config = resolveConfig({
+    const config = await resolveConfigAsync({
       provider,
       model,
       format: format as CommitFormat | undefined,
