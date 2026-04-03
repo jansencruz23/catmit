@@ -40,6 +40,11 @@
           "dark": "media/cat-paw-dark.svg"
         },
         "category": "Catmit"
+      },
+      {
+        "command": "catmit.amend",
+        "title": "Amend Last Commit Message",
+        "category": "Catmit"
       }
     ],
     "menus": {
@@ -47,6 +52,11 @@
         {
           "command": "catmit.generate",
           "group": "navigation",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "catmit.amend",
+          "group": "1_catmit",
           "when": "scmProvider == git"
         }
       ]

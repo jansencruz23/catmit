@@ -12,7 +12,7 @@ export async function generateCommitMessage(diff: string, config: CatmitConfig):
     model,
     system: systemPrompt,
     prompt: diff,
-    maxTokens: 300,
+    maxTokens: 1024,
   });
 
   return text.trim();

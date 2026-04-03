@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { resolveConfig } from '../core/config';
-import { getStagedDiff, stageAll, hasStagedChanges } from '../core/git';
+import { getStagedDiff, stageAll, hasStagedChanges, getLastCommitDiff, amendCommit } from '../core/git';
 import { generateCommitMessage } from '../core/generate';
 import { getStatusMessage, NO_PROVIDER_MESSAGE } from '../core/ui-messages';
 import '../core/providers';
@@ -82,7 +82,51 @@ export function activate(context: vscode.ExtensionContext): void {
     );
   });
 
-  context.subscriptions.push(disposable);
+  const amendDisposable = vscode.commands.registerCommand('catmit.amend', async () => {
+    const gitExtension = vscode.extensions.getExtension<GitExtensionAPI>('vscode.git');
+    if (!gitExtension) {
+      vscode.window.showErrorMessage('Catmit: Git extension not found.');
+      return;
+    }
+
+    const gitApi = gitExtension.exports.getAPI(1);
+    const repo = gitApi.repositories[0];
+    if (!repo) {
+      vscode.window.showErrorMessage('Catmit: No Git repository found.');
+      return;
+    }
+
+    const config = resolveConfig(getVscodeConfig(), repo.rootUri.fsPath);
+
+    if (!config.provider) {
+      const action = await vscode.window.showErrorMessage(NO_PROVIDER_MESSAGE, 'Open Settings');
+      if (action === 'Open Settings') {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'catmit.provider');
+      }
+      return;
+    }
+
+    await vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.SourceControl,
+        title: '🐱 Regenerating last commit message...',
+      },
+      async () => {
+        try {
+          const cwd = repo.rootUri.fsPath;
+          const diff = await getLastCommitDiff(cwd);
+          const message = await generateCommitMessage(diff, config);
+          await amendCommit(message, cwd);
+          vscode.window.showInformationMessage(`Catmit: Commit amended!`);
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+          vscode.window.showErrorMessage(`Catmit: ${errorMessage}`);
+        }
+      },
+    );
+  });
+
+  context.subscriptions.push(disposable, amendDisposable);
 }
 
 export function deactivate(): void {

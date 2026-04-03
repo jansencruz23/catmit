@@ -32,3 +32,25 @@ export async function commitWithMessage(message: string, cwd?: string): Promise<
   const git = simpleGit(cwd);
   await git.commit(message);
 }
+
+export async function amendCommit(message: string, cwd?: string): Promise<void> {
+  const git = simpleGit(cwd);
+  await git.commit(message, { '--amend': null });
+}
+
+export async function getLastCommitMessage(cwd?: string): Promise<string> {
+  const git = simpleGit(cwd);
+  const log = await git.log({ maxCount: 1 });
+  return log.latest?.message ?? '';
+}
+
+export async function getLastCommitDiff(cwd?: string): Promise<string> {
+  const git = simpleGit(cwd);
+  const diff = await git.diff(['HEAD~1', 'HEAD']);
+
+  if (diff.length > MAX_DIFF_LENGTH) {
+    return diff.slice(0, MAX_DIFF_LENGTH) + '\n\n[... diff truncated for length]';
+  }
+
+  return diff;
+}
