@@ -4,6 +4,7 @@ import { Spinner, StatusMessage } from '@inkjs/ui';
 import { resolveConfig } from '../../core/config';
 import { getLastCommitDiff, getLastCommitMessage, amendCommit } from '../../core/git';
 import { generateCommitMessage } from '../../core/generate';
+import { useRotatingMessage } from './useRotatingMessage';
 import '../../core/providers';
 import type { CommitFormat } from '../../core/types';
 
@@ -23,6 +24,7 @@ export function Amend({ provider, model, apiKey, format, apply }: AmendProps) {
   const [newMessage, setNewMessage] = useState('');
   const [error, setError] = useState('');
   const [amended, setAmended] = useState(false);
+  const rotatingStatus = useRotatingMessage(phase === 'generating');
 
   useEffect(() => {
     run();
@@ -80,11 +82,12 @@ export function Amend({ provider, model, apiKey, format, apply }: AmendProps) {
 
       {phase === 'generating' && (
         <Box flexDirection="column" gap={1}>
+          <Text>{rotatingStatus}</Text>
           <Box flexDirection="column">
             <Text dimColor>Current message:</Text>
             <Text>  {oldMessage}</Text>
           </Box>
-          <Spinner label="Generating new commit message..." />
+          <Spinner label="Rewriting commit message..." />
         </Box>
       )}
 

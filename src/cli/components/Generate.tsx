@@ -4,7 +4,7 @@ import { Spinner, StatusMessage } from '@inkjs/ui';
 import { resolveConfig } from '../../core/config';
 import { getStagedDiff, commitWithMessage } from '../../core/git';
 import { generateCommitMessage } from '../../core/generate';
-import { getMoodMessage } from '../../core/ui-messages';
+import { useRotatingMessage } from './useRotatingMessage';
 import '../../core/providers';
 import type { CommitFormat } from '../../core/types';
 
@@ -22,8 +22,8 @@ export function Generate({ provider, model, apiKey, format, commit }: GeneratePr
   const [phase, setPhase] = useState<Phase>('reading-diff');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const [mood, setMood] = useState('');
   const [committed, setCommitted] = useState(false);
+  const rotatingStatus = useRotatingMessage(phase === 'generating');
 
   useEffect(() => {
     run();
@@ -52,7 +52,6 @@ export function Generate({ provider, model, apiKey, format, commit }: GeneratePr
       return;
     }
 
-    setMood(getMoodMessage(diff.length));
     setPhase('generating');
 
     try {
@@ -79,7 +78,7 @@ export function Generate({ provider, model, apiKey, format, commit }: GeneratePr
 
       {phase === 'generating' && (
         <Box flexDirection="column" gap={1}>
-          {mood && <Text dimColor>{mood}</Text>}
+          <Text>{rotatingStatus}</Text>
           <Spinner label="Generating commit message..." />
         </Box>
       )}
