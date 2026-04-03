@@ -45,6 +45,15 @@
         "command": "catmit.amend",
         "title": "Amend Last Commit Message",
         "category": "Catmit"
+      },
+      {
+        "command": "catmit.push",
+        "title": "Stage, Commit & Push",
+        "icon": {
+          "light": "media/cat-paw-light.svg",
+          "dark": "media/cat-paw-dark.svg"
+        },
+        "category": "Catmit"
       }
     ],
     "menus": {
@@ -52,6 +61,11 @@
         {
           "command": "catmit.generate",
           "group": "navigation",
+          "when": "scmProvider == git"
+        },
+        {
+          "command": "catmit.push",
+          "group": "1_catmit",
           "when": "scmProvider == git"
         },
         {
