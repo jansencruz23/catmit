@@ -19,12 +19,13 @@ interface GitRepository {
   inputBox: { value: string };
 }
 
+let secrets: vscode.SecretStorage;
+
 function getVscodeConfig(): Partial<CatmitConfig> {
   const vsConfig = vscode.workspace.getConfiguration('catmit');
   return {
     provider: vsConfig.get('provider') || undefined,
     model: vsConfig.get('model') || undefined,
-    apiKey: vsConfig.get('apiKey') || undefined,
     ollamaUrl: vsConfig.get('ollamaUrl') || undefined,
     format: vsConfig.get('format') || undefined,
     maxLength: vsConfig.get('maxLength') || undefined,
@@ -34,7 +35,7 @@ function getVscodeConfig(): Partial<CatmitConfig> {
   } as Partial<CatmitConfig>;
 }
 
-function getRepoOrError(): { repo: GitRepository; config: CatmitConfig } | null {
+async function getRepoAndConfig(): Promise<{ repo: GitRepository; config: CatmitConfig } | null> {
   const gitExtension = vscode.extensions.getExtension<GitExtensionAPI>('vscode.git');
   if (!gitExtension) {
     vscode.window.showErrorMessage('Catmit: Git extension not found.');
@@ -48,7 +49,14 @@ function getRepoOrError(): { repo: GitRepository; config: CatmitConfig } | null 
     return null;
   }
 
-  const config = resolveConfig(getVscodeConfig(), repo.rootUri.fsPath);
+  // Read API key from SecretStorage first, then fall back to config cascade
+  const storedKey = await secrets.get('catmit.apiKey');
+  const overrides = getVscodeConfig();
+  if (storedKey) {
+    overrides.apiKey = storedKey;
+  }
+
+  const config = resolveConfig(overrides, repo.rootUri.fsPath);
 
   if (!config.provider) {
     vscode.window.showErrorMessage(NO_PROVIDER_MESSAGE, 'Open Settings').then((action) => {
@@ -63,9 +71,31 @@ function getRepoOrError(): { repo: GitRepository; config: CatmitConfig } | null 
 }
 
 export function activate(context: vscode.ExtensionContext): void {
+  secrets = context.secrets;
+
+  // Set API Key: securely store in OS keychain
+  const setApiKeyDisposable = vscode.commands.registerCommand('catmit.setApiKey', async () => {
+    const key = await vscode.window.showInputBox({
+      prompt: 'Enter your API key for the configured provider',
+      password: true,
+      placeHolder: 'sk-... / AIza...',
+      ignoreFocusOut: true,
+    });
+
+    if (key === undefined) return; // cancelled
+
+    if (key === '') {
+      await secrets.delete('catmit.apiKey');
+      vscode.window.showInformationMessage('Catmit: API key removed.');
+    } else {
+      await secrets.store('catmit.apiKey', key);
+      vscode.window.showInformationMessage('Catmit: API key saved securely.');
+    }
+  });
+
   // Generate: stage all → generate message → fill input box
   const generateDisposable = vscode.commands.registerCommand('catmit.generate', async () => {
-    const result = getRepoOrError();
+    const result = await getRepoAndConfig();
     if (!result) return;
     const { repo, config } = result;
 
@@ -90,7 +120,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   // Amend: regenerate last commit message
   const amendDisposable = vscode.commands.registerCommand('catmit.amend', async () => {
-    const result = getRepoOrError();
+    const result = await getRepoAndConfig();
     if (!result) return;
     const { repo, config } = result;
 
@@ -113,7 +143,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
   // Push: stage all → generate → commit → push
   const pushDisposable = vscode.commands.registerCommand('catmit.push', async () => {
-    const result = getRepoOrError();
+    const result = await getRepoAndConfig();
     if (!result) return;
     const { repo, config } = result;
 
@@ -145,7 +175,7 @@ export function activate(context: vscode.ExtensionContext): void {
     );
   });
 
-  context.subscriptions.push(generateDisposable, amendDisposable, pushDisposable);
+  context.subscriptions.push(setApiKeyDisposable, generateDisposable, amendDisposable, pushDisposable);
 }
 
 export function deactivate(): void {

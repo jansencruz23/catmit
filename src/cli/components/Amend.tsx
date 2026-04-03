@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Text } from 'ink';
 import { Spinner, StatusMessage } from '@inkjs/ui';
 import { resolveConfig } from '../../core/config';
@@ -13,12 +13,11 @@ type Phase = 'reading' | 'generating' | 'done' | 'error';
 interface AmendProps {
   provider?: string;
   model?: string;
-  apiKey?: string;
   format?: string;
   apply?: boolean;
 }
 
-export function Amend({ provider, model, apiKey, format, apply }: AmendProps) {
+export function Amend({ provider, model, format, apply }: AmendProps) {
   const [phase, setPhase] = useState<Phase>('reading');
   const [oldMessage, setOldMessage] = useState('');
   const [newMessage, setNewMessage] = useState('');
@@ -34,7 +33,6 @@ export function Amend({ provider, model, apiKey, format, apply }: AmendProps) {
     const config = resolveConfig({
       provider,
       model,
-      apiKey,
       format: format as CommitFormat | undefined,
     });
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Text } from 'ink';
 import { Spinner, StatusMessage } from '@inkjs/ui';
 import { resolveConfig } from '../../core/config';
@@ -13,12 +13,11 @@ type Phase = 'reading-diff' | 'generating' | 'done' | 'error';
 interface GenerateProps {
   provider?: string;
   model?: string;
-  apiKey?: string;
   format?: string;
   commit?: boolean;
 }
 
-export function Generate({ provider, model, apiKey, format, commit }: GenerateProps) {
+export function Generate({ provider, model, format, commit }: GenerateProps) {
   const [phase, setPhase] = useState<Phase>('reading-diff');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -33,7 +32,6 @@ export function Generate({ provider, model, apiKey, format, commit }: GeneratePr
     const config = resolveConfig({
       provider,
       model,
-      apiKey,
       format: format as CommitFormat | undefined,
     });
 

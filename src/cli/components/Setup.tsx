@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Text } from 'ink';
-import { Select, TextInput, StatusMessage, ConfirmInput } from '@inkjs/ui';
+import { Select, TextInput, StatusMessage } from '@inkjs/ui';
 import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { homedir } from 'os';

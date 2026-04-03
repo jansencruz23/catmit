@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, Box } from 'ink';
 import { Command } from 'commander';
 import { Banner } from './components/Banner';
@@ -18,7 +17,6 @@ program
   .description('Generate a commit message from staged changes')
   .option('-p, --provider <provider>', 'AI provider (openai, anthropic, gemini, ollama)')
   .option('-m, --model <model>', 'Model name')
-  .option('-k, --api-key <key>', 'API key')
   .option('-f, --format <format>', 'Commit format (conventional, angular, karma, emoji, semantic, simple)')
   .option('-c, --commit', 'Auto-commit with the generated message')
   .action((opts: Record<string, string | boolean | undefined>) => {
@@ -28,7 +26,6 @@ program
         <Generate
           provider={opts.provider as string | undefined}
           model={opts.model as string | undefined}
-          apiKey={opts.apiKey as string | undefined}
           format={opts.format as string | undefined}
           commit={opts.commit as boolean | undefined}
         />
@@ -41,7 +38,6 @@ program
   .description('Regenerate and amend the last commit message')
   .option('-p, --provider <provider>', 'AI provider (openai, anthropic, gemini, ollama)')
   .option('-m, --model <model>', 'Model name')
-  .option('-k, --api-key <key>', 'API key')
   .option('-f, --format <format>', 'Commit format')
   .option('-a, --apply', 'Apply the new message to the last commit')
   .action((opts: Record<string, string | boolean | undefined>) => {
@@ -51,7 +47,6 @@ program
         <Amend
           provider={opts.provider as string | undefined}
           model={opts.model as string | undefined}
-          apiKey={opts.apiKey as string | undefined}
           format={opts.format as string | undefined}
           apply={opts.apply as boolean | undefined}
         />
@@ -64,7 +59,6 @@ program
   .description('Stage all, generate message, commit, and push — all in one')
   .option('-p, --provider <provider>', 'AI provider (openai, anthropic, gemini, ollama)')
   .option('-m, --model <model>', 'Model name')
-  .option('-k, --api-key <key>', 'API key')
   .option('-f, --format <format>', 'Commit format')
   .action((opts: Record<string, string | boolean | undefined>) => {
     render(
@@ -73,7 +67,6 @@ program
         <Push
           provider={opts.provider as string | undefined}
           model={opts.model as string | undefined}
-          apiKey={opts.apiKey as string | undefined}
           format={opts.format as string | undefined}
         />
       </Box>,

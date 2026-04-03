@@ -47,6 +47,11 @@
         "category": "Catmit"
       },
       {
+        "command": "catmit.setApiKey",
+        "title": "Set API Key",
+        "category": "Catmit"
+      },
+      {
         "command": "catmit.push",
         "title": "Stage, Commit & Push",
         "icon": {
@@ -93,11 +98,6 @@
           "type": "string",
           "default": "",
           "description": "Override the default model for the selected provider"
-        },
-        "catmit.apiKey": {
-          "type": "string",
-          "default": "",
-          "description": "API key for the selected provider"
         },
         "catmit.ollamaUrl": {
           "type": "string",
@@ -163,15 +163,15 @@
     "package": "vsce package"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.0.0",
-    "@ai-sdk/google": "^1.0.0",
-    "@ai-sdk/openai": "^1.0.0",
+    "@ai-sdk/anthropic": "^3.0.66",
+    "@ai-sdk/google": "^3.0.57",
+    "@ai-sdk/openai": "^3.0.50",
     "@inkjs/ui": "^2.0.0",
     "@types/react": "^19.2.14",
-    "ai": "^4.0.0",
+    "ai": "^6.0.145",
     "commander": "^13.0.0",
     "ink": "^6.8.0",
-    "ollama-ai-provider": "^1.0.0",
+    "ollama-ai-provider": "^1.2.0",
     "react": "^19.2.4",
     "simple-git": "^3.27.0"
   },
@@ -181,7 +181,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "@vscode/vsce": "^3.0.0",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.28.0",
     "eslint": "^9.0.0",
     "prettier": "^3.0.0",
     "typescript": "^5.7.0",

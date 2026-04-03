@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Text } from 'ink';
 import { Spinner, StatusMessage } from '@inkjs/ui';
 import { resolveConfig } from '../../core/config';
@@ -13,11 +13,10 @@ type Phase = 'staging' | 'generating' | 'committing' | 'pushing' | 'done' | 'err
 interface PushProps {
   provider?: string;
   model?: string;
-  apiKey?: string;
   format?: string;
 }
 
-export function Push({ provider, model, apiKey, format }: PushProps) {
+export function Push({ provider, model, format }: PushProps) {
   const [phase, setPhase] = useState<Phase>('staging');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -31,7 +30,6 @@ export function Push({ provider, model, apiKey, format }: PushProps) {
     const config = resolveConfig({
       provider,
       model,
-      apiKey,
       format: format as CommitFormat | undefined,
     });
 

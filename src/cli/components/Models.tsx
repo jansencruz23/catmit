@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Text } from 'ink';
 import { getAvailableProviders, getProviderDefaults } from '../../core/providers';
 import '../../core/providers';
