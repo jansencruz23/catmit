@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "skills": {
+    "code-quality": {
+      "source": "miles990/claude-software-skills",
+      "sourceType": "github",
+      "computedHash": "07fc767bbe21b187bfea3634e2bfdc510fa0d2fd6fb10b22780bb66817cf2a57"
+    },
+    "conventional-commit": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "computedHash": "f29c9486cede6c7b2df0cfb0a2e4aa67446552b991bcf17d1b309e903171f03d"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "computedHash": "645b891da1edbae76ab79c7b088d4e73397464f8396edaf773c0e01971ce75d6"
+    },
+    "typescript": {
+      "source": "siviter-xyz/dot-agent",
+      "sourceType": "github",
+      "computedHash": "5867e06d30c3432967f6910e13a0b124cc54ff17b7e11377d4168fc1188993bb"
+    },
+    "vscode-extension-guide": {
+      "source": "aktsmm/agent-skills",
+      "sourceType": "github",
+      "computedHash": "6710ea87f7655968a80e417b4fcbdf86e7ccc0e2265d04ed27ffe6a40b8c397f"
+    }
+  }
+}
