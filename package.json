@@ -52,6 +52,11 @@
         "category": "Catmit"
       },
       {
+        "command": "catmit.setup",
+        "title": "Setup Wizard",
+        "category": "Catmit"
+      },
+      {
         "command": "catmit.setApiKey",
         "title": "Set API Key",
         "category": "Catmit"
