@@ -10,6 +10,7 @@ const sharedConfig = {
   sourcemap: true,
   minify: !isWatch,
   logLevel: 'info',
+  jsx: 'automatic',
 };
 
 // VS Code extension bundle
@@ -21,12 +22,29 @@ const extensionConfig = {
   format: 'cjs',
 };
 
-// CLI bundle
+// Plugin to stub out optional devtools import
+const stubDevtools = {
+  name: 'stub-react-devtools',
+  setup(build) {
+    build.onResolve({ filter: /^react-devtools-core$/ }, () => ({
+      path: 'react-devtools-core',
+      namespace: 'stub',
+    }));
+    build.onLoad({ filter: /.*/, namespace: 'stub' }, () => ({
+      contents: 'export default undefined;',
+    }));
+  },
+};
+
+// CLI bundle (ESM required — Ink uses top-level await)
+// Keep all npm packages external to avoid CJS/ESM conflicts with yoga-layout WASM
 const cliConfig = {
   ...sharedConfig,
-  entryPoints: ['src/cli/cli.ts'],
-  outfile: 'dist/cli.js',
-  format: 'cjs',
+  entryPoints: ['src/cli/cli.tsx'],
+  outfile: 'dist/cli.mjs',
+  format: 'esm',
+  packages: 'external',
+  plugins: [stubDevtools],
 };
 
 if (isWatch) {
@@ -38,7 +56,7 @@ if (isWatch) {
   await Promise.all([esbuild.build(extensionConfig), esbuild.build(cliConfig)]);
 
   // Prepend shebang to CLI bundle
-  const cliBundlePath = 'dist/cli.js';
+  const cliBundlePath = 'dist/cli.mjs';
   const cliContent = readFileSync(cliBundlePath, 'utf-8');
   writeFileSync(cliBundlePath, '#!/usr/bin/env node\n' + cliContent);
 }
