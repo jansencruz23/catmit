@@ -165,7 +165,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "package": "vsce package"
+    "package": "vsce package --out vsix/"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.66",

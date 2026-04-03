@@ -1,6 +1,7 @@
 node_modules/
 dist/
 *.vsix
+vsix/
 .env
 .env.*
 .catmitrc.json

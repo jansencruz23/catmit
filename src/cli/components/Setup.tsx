@@ -83,10 +83,10 @@ export function Setup() {
       }
     }
 
-    // Remove apiKey from existing config if migrating to keychain
-    if (keySavedToKeychain && 'apiKey' in existing) {
-      delete existing.apiKey;
-    }
+    // Clear stale fields from previous provider config
+    delete existing.model;
+    delete existing.ollamaUrl;
+    delete existing.apiKey;
 
     writeFileSync(savePath, JSON.stringify({ ...existing, ...config }, null, 2) + '\n');
     setSavedPath(savePath);
