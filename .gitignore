@@ -3,4 +3,5 @@ dist/
 *.vsix
 .env
 .env.*
+.catmitrc.json
 *.log

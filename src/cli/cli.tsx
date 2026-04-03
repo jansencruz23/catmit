@@ -8,7 +8,7 @@ import { Models } from './components/Models';
 
 const program = new Command()
   .name('catmit')
-  .description('AI-powered commit message generator')
+  .description('AI-powered commit message generator!')
   .version('0.1.0');
 
 program

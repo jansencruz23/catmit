@@ -17,7 +17,8 @@ interface PartialConfig {
 }
 
 function loadDotfile(cwd?: string): PartialConfig {
-  const paths = [cwd ? join(cwd, '.catmitrc.json') : null, join(homedir(), '.catmitrc.json')].filter(Boolean) as string[];
+  const searchDir = cwd || process.cwd();
+  const paths = [join(searchDir, '.catmitrc.json'), join(homedir(), '.catmitrc.json')];
 
   for (const filePath of paths) {
     if (existsSync(filePath)) {
