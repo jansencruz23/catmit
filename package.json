@@ -3,7 +3,7 @@
   "displayName": "CatMit",
   "description": "AI-powered commit message generator. Supports OpenAI, Anthropic, Gemini, and Ollama. Generate, commit, and push in one click.",
   "version": "0.1.4",
-  "publisher": "jansencruz23",
+  "publisher": "jansenccruz",
   "repository": {
     "type": "git",
     "url": "https://github.com/jansencruz23/catmit"
