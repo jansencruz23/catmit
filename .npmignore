@@ -4,6 +4,10 @@ media/
 .vscode/
 .agents/
 .claude/
+.github/
+skills/
+skills-lock.json
+vsix/
 *.vsix
 *.map
 esbuild.mjs
@@ -13,5 +17,6 @@ tsconfig.json
 .eslintrc.cjs
 .catmitrc.json
 .vscodeignore
+.npmignore
 dist/extension.js
 dist/extension.js.map
