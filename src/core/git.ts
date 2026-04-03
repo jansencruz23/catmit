@@ -38,6 +38,11 @@ export async function amendCommit(message: string, cwd?: string): Promise<void> 
   await git.commit(message, { '--amend': null });
 }
 
+export async function push(cwd?: string): Promise<void> {
+  const git = simpleGit(cwd);
+  await git.push();
+}
+
 export async function getLastCommitMessage(cwd?: string): Promise<string> {
   const git = simpleGit(cwd);
   const log = await git.log({ maxCount: 1 });

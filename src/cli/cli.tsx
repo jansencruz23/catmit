@@ -6,6 +6,7 @@ import { Generate } from './components/Generate';
 import { Setup } from './components/Setup';
 import { Models } from './components/Models';
 import { Amend } from './components/Amend';
+import { Push } from './components/Push';
 
 const program = new Command()
   .name('catmit')
@@ -53,6 +54,27 @@ program
           apiKey={opts.apiKey as string | undefined}
           format={opts.format as string | undefined}
           apply={opts.apply as boolean | undefined}
+        />
+      </Box>,
+    );
+  });
+
+program
+  .command('push')
+  .description('Stage all, generate message, commit, and push — all in one')
+  .option('-p, --provider <provider>', 'AI provider (openai, anthropic, gemini, ollama)')
+  .option('-m, --model <model>', 'Model name')
+  .option('-k, --api-key <key>', 'API key')
+  .option('-f, --format <format>', 'Commit format')
+  .action((opts: Record<string, string | boolean | undefined>) => {
+    render(
+      <Box flexDirection="column">
+        <Banner />
+        <Push
+          provider={opts.provider as string | undefined}
+          model={opts.model as string | undefined}
+          apiKey={opts.apiKey as string | undefined}
+          format={opts.format as string | undefined}
         />
       </Box>,
     );
