@@ -34,7 +34,7 @@ export function getMoodMessage(diffLength: number): string {
 export const SUCCESS_MESSAGE = '😺 Done! Here\'s your commit message:';
 export const NO_STAGED_MESSAGE = '😿 No staged changes found. Stage some files first.';
 export const API_ERROR_MESSAGE = '🙀 Couldn\'t reach the AI provider. Check your config.';
-export const NO_PROVIDER_MESSAGE = '😿 No provider configured. Run `catmit --setup` or set catmit.provider in VS Code settings.';
+export const NO_PROVIDER_MESSAGE = '😿 No provider configured. Run `catmit setup` or set catmit.provider in VS Code settings.';
 
 export const ASCII_CAT = `
        /\\___/\\

@@ -1,10 +1,9 @@
-#!/usr/bin/env node
-
 import { Command } from 'commander';
 import { resolveConfig } from '../core/config';
 import { getStagedDiff, commitWithMessage } from '../core/git';
 import { generateCommitMessage } from '../core/generate';
 import { ASCII_CAT, getMoodMessage, SUCCESS_MESSAGE, NO_STAGED_MESSAGE, NO_PROVIDER_MESSAGE } from '../core/ui-messages';
+import { runSetup } from './setup';
 import '../core/providers';
 import { getAvailableProviders, getProviderDefaults } from '../core/providers';
 import type { CommitFormat, ProviderName } from '../core/types';
@@ -61,6 +60,14 @@ program
       console.error(`\n🙀 Failed to generate commit message: ${errorMessage}`);
       process.exit(1);
     }
+  });
+
+program
+  .command('setup')
+  .description('Interactive setup to configure your AI provider')
+  .action(async () => {
+    console.log(ASCII_CAT);
+    await runSetup();
   });
 
 program
