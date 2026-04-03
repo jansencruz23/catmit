@@ -53,7 +53,8 @@ ${formatInstruction}
 ## Rules
 - Subject line: imperative mood, no period at the end, max ${config.maxLength} characters
 - Be precise about what changed
-- Output ONLY the commit message, nothing else — no markdown fences, no explanation
+- Output ONLY the commit message, nothing else — no markdown, no bold, no fences, no explanation
+- Do NOT use markdown formatting like **bold**, *italic*, or headings in the commit message
 ${bodyInstruction}
 ${bulletInstruction}
 ${languageNote}`.trim();

@@ -5,11 +5,17 @@ node_modules/**
 .agents/**
 .claude/**
 .git/**
+skills/**
+skills-lock.json
+.catmitrc.json
 .gitignore
 .eslintrc.cjs
 .prettierrc
 tsconfig.json
 esbuild.mjs
 vitest.config.ts
+package-lock.json
+dist/cli.mjs
+dist/cli.mjs.map
 **/*.map
 *.vsix
