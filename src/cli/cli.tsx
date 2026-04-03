@@ -1,5 +1,6 @@
 import { render, Box } from 'ink';
 import { Command } from 'commander';
+import { VERSION } from '../core/version';
 import { Banner } from './components/Banner';
 import { Generate } from './components/Generate';
 import { Setup } from './components/Setup';
@@ -10,7 +11,7 @@ import { Push } from './components/Push';
 const program = new Command()
   .name('catmit')
   .description('AI-powered commit message generator!')
-  .version('0.1.0');
+  .version(VERSION);
 
 program
   .command('generate', { isDefault: true })

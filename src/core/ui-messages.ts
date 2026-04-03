@@ -39,7 +39,7 @@ export const NO_PROVIDER_MESSAGE = '😿 No provider configured. Run `catmit set
 export const ASCII_CAT = `
        /\\___/\\
       (  o o  )
-      (  =^=  )  Catmit v0.1.0
+      (  =^=  )  Catmit
        )     (   AI-powered commit messages 🐾
       (       )
      ( (  )  ( )

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Box, Text } from 'ink';
+import { VERSION } from '../../core/version';
 
 const FRAMES = [
   // Frame 1: eyes open, tail right
@@ -63,7 +64,7 @@ export function Banner() {
           <Text color="yellow">{line}</Text>
           {i === 2 && <Text bold color="magenta">  catmit</Text>}
           {i === 3 && <Text dimColor>  AI-powered commit messages</Text>}
-          {i === 4 && <Text dimColor>  v0.1.0</Text>}
+          {i === 4 && <Text dimColor>  v{VERSION}</Text>}
         </Box>
       ))}
     </Box>
