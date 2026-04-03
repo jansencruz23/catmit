@@ -1,0 +1,162 @@
+{
+  "name": "catmit",
+  "displayName": "Catmit",
+  "description": "AI-powered commit message generator with cat personality",
+  "version": "0.1.0",
+  "publisher": "catmit",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=18.0.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "git",
+    "commit",
+    "ai",
+    "conventional-commits",
+    "openai",
+    "anthropic",
+    "gemini",
+    "ollama"
+  ],
+  "main": "./dist/extension.js",
+  "bin": {
+    "catmit": "./dist/cli.js"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "catmit.generate",
+        "title": "Generate Commit Message",
+        "icon": {
+          "light": "media/cat-paw.svg",
+          "dark": "media/cat-paw.svg"
+        },
+        "category": "Catmit"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "catmit.generate",
+          "group": "navigation",
+          "when": "scmProvider == git"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Catmit",
+      "properties": {
+        "catmit.provider": {
+          "type": "string",
+          "enum": [
+            "openai",
+            "anthropic",
+            "gemini",
+            "ollama"
+          ],
+          "default": "",
+          "description": "AI provider to use for generating commit messages"
+        },
+        "catmit.model": {
+          "type": "string",
+          "default": "",
+          "description": "Override the default model for the selected provider"
+        },
+        "catmit.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for the selected provider"
+        },
+        "catmit.ollamaUrl": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Ollama server URL"
+        },
+        "catmit.format": {
+          "type": "string",
+          "enum": [
+            "conventional",
+            "angular",
+            "karma",
+            "emoji",
+            "semantic",
+            "simple"
+          ],
+          "default": "conventional",
+          "description": "Commit message format convention"
+        },
+        "catmit.maxLength": {
+          "type": "number",
+          "default": 72,
+          "description": "Maximum subject line length"
+        },
+        "catmit.includeBody": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "always",
+            "never"
+          ],
+          "default": "auto",
+          "description": "Whether to include a detailed commit body"
+        },
+        "catmit.includeBullets": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "always",
+            "never"
+          ],
+          "default": "auto",
+          "description": "Include bullet-point summary in body for multi-file changes"
+        },
+        "catmit.language": {
+          "type": "string",
+          "default": "en",
+          "description": "Commit message language"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "ai": "^4.0.0",
+    "@ai-sdk/openai": "^1.0.0",
+    "@ai-sdk/anthropic": "^1.0.0",
+    "@ai-sdk/google": "^1.0.0",
+    "ollama-ai-provider": "^1.0.0",
+    "simple-git": "^3.27.0",
+    "commander": "^13.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.24.0",
+    "@vscode/vsce": "^3.0.0",
+    "vitest": "^3.0.0",
+    "eslint": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "prettier": "^3.0.0"
+  }
+}
