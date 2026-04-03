@@ -1,7 +1,4 @@
 import type { LanguageModel } from 'ai';
-import type { LanguageModelV1 } from '@ai-sdk/provider';
-
-export type AnyLanguageModel = LanguageModel | LanguageModelV1;
 
 export type ProviderName = 'openai' | 'anthropic' | 'gemini' | 'ollama';
 
@@ -24,7 +21,7 @@ export interface CatmitConfig {
 export interface ProviderEntry {
   readonly name: ProviderName;
   readonly defaultModel: string;
-  createModel(config: CatmitConfig): AnyLanguageModel;
+  createModel(config: CatmitConfig): LanguageModel;
   unloadModel?(config: CatmitConfig): Promise<void>;
 }
 

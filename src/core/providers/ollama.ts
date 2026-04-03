@@ -1,4 +1,4 @@
-import { createOllama } from 'ollama-ai-provider';
+import { createOllama } from 'ai-sdk-ollama';
 import type { ProviderEntry, CatmitConfig } from '../types';
 import { registerProvider } from './registry';
 
@@ -6,7 +6,7 @@ const ollamaProvider: ProviderEntry = {
   name: 'ollama',
   defaultModel: 'llama3.2',
   createModel(config: CatmitConfig) {
-    const ollama = createOllama({ baseURL: `${config.ollamaUrl || 'http://localhost:11434'}/api` });
+    const ollama = createOllama({ baseURL: config.ollamaUrl || 'http://localhost:11434' });
     return ollama(config.model || this.defaultModel);
   },
   async unloadModel(config: CatmitConfig) {

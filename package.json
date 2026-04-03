@@ -175,9 +175,9 @@
     "@inkjs/ui": "^2.0.0",
     "@types/react": "^19.2.14",
     "ai": "^6.0.145",
+    "ai-sdk-ollama": "^3.8.2",
     "commander": "^13.0.0",
     "ink": "^6.8.0",
-    "ollama-ai-provider": "^1.2.0",
     "react": "^19.2.4",
     "simple-git": "^3.27.0"
   },

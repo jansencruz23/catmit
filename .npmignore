@@ -1,0 +1,17 @@
+src/
+test/
+media/
+.vscode/
+.agents/
+.claude/
+*.vsix
+*.map
+esbuild.mjs
+vitest.config.ts
+tsconfig.json
+.prettierrc
+.eslintrc.cjs
+.catmitrc.json
+.vscodeignore
+dist/extension.js
+dist/extension.js.map
