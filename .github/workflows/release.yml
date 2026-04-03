@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npx tsc --noEmit
@@ -22,11 +22,12 @@ jobs:
   publish-npm:
     needs: test
     runs-on: ubuntu-latest
+    if: ${{ vars.PUBLISH_NPM != 'false' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           registry-url: https://registry.npmjs.org
       - run: npm ci
@@ -38,14 +39,16 @@ jobs:
   publish-vscode:
     needs: test
     runs-on: ubuntu-latest
+    if: ${{ vars.PUBLISH_VSCE != 'false' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: mkdir -p vsix
       - run: npx @vscode/vsce package --out vsix/ --allow-missing-repository
       - run: npx @vscode/vsce publish --allow-missing-repository
         env:
@@ -62,11 +65,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: mkdir -p vsix
       - run: npx @vscode/vsce package --out vsix/ --allow-missing-repository
       - run: npx ovsx publish vsix/*.vsix
+        if: ${{ env.OVSX_PAT != '' }}
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
