@@ -2,7 +2,7 @@
   "name": "catmit",
   "displayName": "CatMit",
   "description": "AI-powered commit message generator. Supports OpenAI, Anthropic, Gemini, and Ollama. Generate, commit, and push in one click.",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "publisher": "jansencruz23",
   "repository": {
     "type": "git",
@@ -15,17 +15,44 @@
   },
   "categories": [
     "SCM Providers",
+    "Machine Learning",
     "Other"
   ],
   "keywords": [
     "git",
     "commit",
+    "commit message",
     "ai",
+    "ai commit",
     "conventional-commits",
+    "gitmoji",
     "openai",
     "anthropic",
+    "claude",
     "gemini",
-    "ollama"
+    "ollama",
+    "gpt",
+    "llm",
+    "auto commit",
+    "commit generator",
+    "source control",
+    "scm"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e2e",
+    "theme": "dark"
+  },
+  "badges": [
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/v/jansencruz23.catmit",
+      "href": "https://marketplace.visualstudio.com/items?itemName=jansencruz23.catmit",
+      "description": "VS Code Marketplace Version"
+    },
+    {
+      "url": "https://img.shields.io/npm/v/catmit",
+      "href": "https://www.npmjs.com/package/catmit",
+      "description": "npm Version"
+    }
   ],
   "icon": "media/catmit-icon.png",
   "main": "./dist/extension.js",

@@ -148,15 +148,23 @@ export function activate(context: vscode.ExtensionContext): void {
 
   // First-run: check on activation if setup is needed
   const vsConfig = vscode.workspace.getConfiguration('catmit');
-  if (!vsConfig.get<string>('provider')) {
-    vscode.window
-      .showInformationMessage('Welcome to CatMit! Set up your AI provider to get started.', 'Setup')
-      .then((action) => {
-        if (action === 'Setup') {
-          runSetupWizard();
-        }
-      });
-  }
+  const hasProvider = vsConfig.get<string>('provider');
+  secrets.get('catmit.apiKey').then((storedKey) => {
+    if (!hasProvider || (!storedKey && hasProvider !== 'ollama')) {
+      vscode.window
+        .showInformationMessage(
+          !hasProvider
+            ? 'Welcome to CatMit! Set up your AI provider to get started.'
+            : 'CatMit: No API key found. Set one to start generating commit messages.',
+          'Setup',
+        )
+        .then((action) => {
+          if (action === 'Setup') {
+            runSetupWizard();
+          }
+        });
+    }
+  });
 
   // Setup wizard command
   const setupDisposable = vscode.commands.registerCommand('catmit.setup', () => runSetupWizard());

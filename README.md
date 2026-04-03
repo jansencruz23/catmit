@@ -1,8 +1,13 @@
-# CatMit
+# CatMit — AI Commit Message Generator
 
-AI-powered commit message generator with a cat personality. Available as both a **VS Code extension** and a **CLI tool**.
+Generate conventional commit messages with AI. One click in VS Code, one command in the terminal.
 
-CatMit reads your staged git changes, sends them to your chosen AI provider, and generates clean, conventional commit messages — so you can stop writing them yourself.
+CatMit reads your staged git changes, sends them to your chosen AI provider (OpenAI, Anthropic Claude, Google Gemini, or Ollama), and generates clean, standardized commit messages. Available as a **VS Code / Windsurf extension** and a **CLI tool**.
+
+[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/jansencruz23.catmit?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=jansencruz23.catmit)
+[![npm](https://img.shields.io/npm/v/catmit)](https://www.npmjs.com/package/catmit)
+[![Open VSX](https://img.shields.io/open-vsx/v/jansencruz23/catmit?label=Open%20VSX)](https://open-vsx.org/extension/jansencruz23/catmit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Features
 
