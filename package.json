@@ -36,8 +36,8 @@
         "command": "catmit.generate",
         "title": "Generate Commit Message",
         "icon": {
-          "light": "media/cat-paw.svg",
-          "dark": "media/cat-paw.svg"
+          "light": "media/cat-paw-light.svg",
+          "dark": "media/cat-paw-dark.svg"
         },
         "category": "Catmit"
       }

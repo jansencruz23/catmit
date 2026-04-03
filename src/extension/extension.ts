@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { resolveConfig } from '../core/config';
-import { getStagedDiff } from '../core/git';
+import { getStagedDiff, stageAll, hasStagedChanges } from '../core/git';
 import { generateCommitMessage } from '../core/generate';
 import { getStatusMessage, NO_PROVIDER_MESSAGE } from '../core/ui-messages';
 import '../core/providers';
@@ -66,7 +66,12 @@ export function activate(context: vscode.ExtensionContext): void {
       },
       async () => {
         try {
-          const diff = await getStagedDiff(repo.rootUri.fsPath);
+          const cwd = repo.rootUri.fsPath;
+          const alreadyStaged = await hasStagedChanges(cwd);
+          if (!alreadyStaged) {
+            await stageAll(cwd);
+          }
+          const diff = await getStagedDiff(cwd);
           const message = await generateCommitMessage(diff, config);
           repo.inputBox.value = message;
         } catch (error) {

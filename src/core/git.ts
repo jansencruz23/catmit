@@ -23,6 +23,11 @@ export async function hasStagedChanges(cwd?: string): Promise<boolean> {
   return diff.trim().length > 0;
 }
 
+export async function stageAll(cwd?: string): Promise<void> {
+  const git = simpleGit(cwd);
+  await git.add('.');
+}
+
 export async function commitWithMessage(message: string, cwd?: string): Promise<void> {
   const git = simpleGit(cwd);
   await git.commit(message);
