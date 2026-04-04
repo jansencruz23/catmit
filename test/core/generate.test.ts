@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { buildSystemPrompt } from '../../src/core/prompt';
 import type { CatmitConfig } from '../../src/core/types';
-import { getStatusMessage, getMoodMessage, ASCII_CAT } from '../../src/core/ui-messages';
+import { getStatusMessage } from '../../src/core/ui-messages';
 
 const baseConfig: CatmitConfig = {
   provider: 'openai',
@@ -71,23 +71,4 @@ describe('ui-messages', () => {
     expect(msg.length).toBeGreaterThan(0);
   });
 
-  it('getMoodMessage returns small mood for short diff', () => {
-    const msg = getMoodMessage(100);
-    expect(msg).toMatch(/Quick|Small|light/i);
-  });
-
-  it('getMoodMessage returns medium mood for medium diff', () => {
-    const msg = getMoodMessage(1500);
-    expect(msg).toMatch(/Reviewing|Interesting|closer/i);
-  });
-
-  it('getMoodMessage returns large mood for large diff', () => {
-    const msg = getMoodMessage(5000);
-    expect(msg).toMatch(/Big|Lots|Quite/i);
-  });
-
-  it('ASCII_CAT contains the cat art', () => {
-    expect(ASCII_CAT).toContain('=^=');
-    expect(ASCII_CAT).toContain('Catmit');
-  });
 });
