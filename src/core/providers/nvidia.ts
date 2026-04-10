@@ -9,7 +9,6 @@ const nvidiaProvider: ProviderEntry = {
     const nvidia = createOpenAI({
       apiKey: config.apiKey,
       baseURL: 'https://integrate.api.nvidia.com/v1',
-      compatibility: 'compatible',
     });
     return nvidia.chat(config.model || this.defaultModel);
   },
