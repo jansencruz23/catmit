@@ -39,7 +39,7 @@ function loadEnvVars(): PartialConfig {
   return {
     provider: process.env.CATMIT_PROVIDER,
     model: process.env.CATMIT_MODEL,
-    apiKey: process.env.OPENAI_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.GOOGLE_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.GOOGLE_API_KEY || process.env.NVIDIA_API_KEY,
     ollamaUrl: process.env.OLLAMA_URL,
     format: process.env.CATMIT_FORMAT,
     language: process.env.CATMIT_LANGUAGE,

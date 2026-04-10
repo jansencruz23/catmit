@@ -6,6 +6,25 @@ import { getStatusMessage } from '../core/ui-messages';
 import '../core/providers';
 import type { CatmitConfig, ProviderName } from '../core/types';
 
+function formatError(error: unknown): string {
+  if (error instanceof Error) {
+    const err = error as Error & { statusCode?: number; url?: string; responseBody?: string };
+    const parts = [err.message];
+    if (err.statusCode) parts.push(`[${err.statusCode}]`);
+    if (err.url) parts.push(`URL: ${err.url}`);
+    if (err.responseBody) {
+      try {
+        const body = JSON.parse(err.responseBody);
+        if (body.detail) parts.push(body.detail);
+      } catch {
+        parts.push(err.responseBody.slice(0, 200));
+      }
+    }
+    return parts.join(' — ');
+  }
+  return 'Unknown error';
+}
+
 interface GitExtensionAPI {
   getAPI(version: number): GitAPI;
 }
@@ -24,6 +43,7 @@ const PROVIDERS: { label: string; value: ProviderName; description: string }[] =
   { label: 'Anthropic', value: 'anthropic', description: 'Claude Sonnet' },
   { label: 'Google Gemini', value: 'gemini', description: 'Gemini 2.5 Flash' },
   { label: 'Ollama (local)', value: 'ollama', description: 'No API key needed' },
+  { label: 'NVIDIA Build', value: 'nvidia', description: 'Llama 3.1 Nemotron 70B' },
 ];
 
 let secrets: vscode.SecretStorage;
@@ -207,8 +227,7 @@ export function activate(context: vscode.ExtensionContext): void {
           const message = await generateCommitMessage(diff, config);
           repo.inputBox.value = message;
         } catch (error) {
-          const msg = error instanceof Error ? error.message : 'Unknown error';
-          vscode.window.showErrorMessage(`Catmit: ${msg}`);
+          vscode.window.showErrorMessage(`Catmit: ${formatError(error)}`);
         }
       },
     );
@@ -230,8 +249,7 @@ export function activate(context: vscode.ExtensionContext): void {
           await amendCommit(message, cwd);
           vscode.window.showInformationMessage('Catmit: Commit amended!');
         } catch (error) {
-          const msg = error instanceof Error ? error.message : 'Unknown error';
-          vscode.window.showErrorMessage(`Catmit: ${msg}`);
+          vscode.window.showErrorMessage(`Catmit: ${formatError(error)}`);
         }
       },
     );
@@ -264,8 +282,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
           vscode.window.showInformationMessage(`Catmit: Pushed! "${message.split('\n')[0]}"`);
         } catch (error) {
-          const msg = error instanceof Error ? error.message : 'Unknown error';
-          vscode.window.showErrorMessage(`Catmit: ${msg}`);
+          vscode.window.showErrorMessage(`Catmit: ${formatError(error)}`);
         }
       },
     );

@@ -2,9 +2,9 @@
 
 Generate conventional commit messages with AI. One click in VS Code, one command in the terminal.
 
-CatMit reads your staged git changes, sends them to your chosen AI provider (OpenAI, Anthropic Claude, Google Gemini, or Ollama), and generates clean, standardized commit messages. Available as a **VS Code / Windsurf extension** and a **CLI tool**.
+CatMit reads your staged git changes, sends them to your chosen AI provider (OpenAI, Anthropic Claude, Google Gemini, NVIDIA Build, or Ollama), and generates clean, standardized commit messages. Available as a **VS Code / Windsurf extension** and a **CLI tool**.
 
-[![VS Code Marketplace](https://img.shields.io/visual-studio-marketplace/v/jansencruz23.catmit?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=jansencruz23.catmit)
+[![VS Code Marketplace](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fjansencruz23%2Fcatmit%2Fmain%2Fpackage.json&query=%24.version&prefix=v&label=VS%20Code%20Marketplace&color=blue&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=jansencruz23.catmit)
 [![npm](https://img.shields.io/npm/v/catmit)](https://www.npmjs.com/package/catmit)
 [![Open VSX](https://img.shields.io/open-vsx/v/jansencruz23/catmit?label=Open%20VSX)](https://open-vsx.org/extension/jansencruz23/catmit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -12,7 +12,7 @@ CatMit reads your staged git changes, sends them to your chosen AI provider (Ope
 ## Features
 
 - **Generate commit messages** from staged diffs using AI
-- **Multiple AI providers** — OpenAI, Anthropic, Google Gemini, Ollama (local)
+- **Multiple AI providers** — OpenAI, Anthropic, Google Gemini, NVIDIA Build, Ollama (local)
 - **Bring Your Own Key** — use your own API keys, stored securely in the OS keychain
 - **6 commit formats** — Conventional, Angular, Karma, Emoji/Gitmoji, Semantic, Simple
 - **One-command push** — stage, generate, commit, and push in a single step
@@ -42,7 +42,7 @@ CatMit reads your staged git changes, sends them to your chosen AI provider (Ope
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `catmit.provider` | (none) | AI provider: `openai`, `anthropic`, `gemini`, or `ollama` |
+| `catmit.provider` | (none) | AI provider: `openai`, `anthropic`, `gemini`, `nvidia`, or `ollama` |
 | `catmit.model` | (auto) | Override the default model for the selected provider |
 | `catmit.format` | `conventional` | Commit format: `conventional`, `angular`, `karma`, `emoji`, `semantic`, `simple` |
 | `catmit.maxLength` | `72` | Maximum subject line length |
@@ -96,7 +96,7 @@ catmit models
 
 ```
 catmit [generate]          Generate a commit message (default command)
-  -p, --provider <name>    AI provider (openai, anthropic, gemini, ollama)
+  -p, --provider <name>    AI provider (openai, anthropic, gemini, nvidia, ollama)
   -m, --model <name>       Override model
   -f, --format <format>    Commit format (conventional, angular, karma, emoji, semantic, simple)
   -c, --commit             Auto-commit with the generated message
@@ -115,6 +115,7 @@ catmit models              List providers and default models
 | OpenAI | gpt-4o-mini | `OPENAI_API_KEY` |
 | Anthropic | claude-sonnet-4-20250514 | `ANTHROPIC_API_KEY` |
 | Google Gemini | gemini-2.5-flash | `GOOGLE_API_KEY` |
+| NVIDIA Build | nvidia/llama-3.1-nemotron-70b-instruct | `NVIDIA_API_KEY` |
 | Ollama (local) | llama3.2 | (none needed) |
 
 You can override the model with `-m` or the `catmit.model` setting.
@@ -137,7 +138,7 @@ You can override the model with `-m` or the `catmit.model` setting.
 - CLI uses `@github/keytar` for native keychain access
 - No `--api-key` CLI flag — keys are never exposed in shell history or process listings
 - `.catmitrc.json` is gitignored and only stores non-sensitive settings (provider, model, format)
-- Environment variables (`OPENAI_API_KEY`, etc.) are supported as an alternative
+- Environment variables (`OPENAI_API_KEY`, `NVIDIA_API_KEY`, etc.) are supported as an alternative
 
 ## Configuration Priority
 

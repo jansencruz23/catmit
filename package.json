@@ -126,7 +126,8 @@
             "openai",
             "anthropic",
             "gemini",
-            "ollama"
+            "ollama",
+            "nvidia"
           ],
           "default": "",
           "description": "AI provider to use for generating commit messages"

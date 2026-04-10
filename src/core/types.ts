@@ -1,6 +1,6 @@
 import type { LanguageModel } from 'ai';
 
-export type ProviderName = 'openai' | 'anthropic' | 'gemini' | 'ollama';
+export type ProviderName = 'openai' | 'anthropic' | 'gemini' | 'ollama' | 'nvidia';
 
 export type CommitFormat = 'conventional' | 'angular' | 'karma' | 'emoji' | 'semantic' | 'simple';
 
