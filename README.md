@@ -48,6 +48,7 @@ CatMit reads your staged git changes, sends them to your chosen AI provider (Ope
 | `catmit.maxLength` | `72` | Maximum subject line length |
 | `catmit.includeBody` | `auto` | Include a commit body: `auto`, `always`, `never` |
 | `catmit.includeBullets` | `auto` | Bullet-point summary in body: `auto`, `always`, `never` |
+| `catmit.maxBullets` | `5` | Maximum number of bullet points in the commit body (1–20) |
 | `catmit.ollamaUrl` | `http://localhost:11434` | Ollama server URL (for local models) |
 | `catmit.language` | `en` | Commit message language |
 
@@ -88,6 +89,9 @@ catmit amend --apply
 # Use a specific provider or format
 catmit -p anthropic -f emoji
 
+# Cap the body to 3 bullet points
+catmit --max-bullets 3
+
 # List available providers and default models
 catmit models
 ```
@@ -99,6 +103,7 @@ catmit [generate]          Generate a commit message (default command)
   -p, --provider <name>    AI provider (openai, anthropic, gemini, nvidia, ollama)
   -m, --model <name>       Override model
   -f, --format <format>    Commit format (conventional, angular, karma, emoji, semantic, simple)
+  -b, --max-bullets <n>    Maximum number of body bullet points
   -c, --commit             Auto-commit with the generated message
 
 catmit push                Stage all, generate, commit, and push
@@ -107,6 +112,21 @@ catmit amend               Regenerate last commit message
 catmit setup               Interactive provider and API key setup
 catmit models              List providers and default models
 ```
+
+### Persisting settings
+
+CLI flags only apply to a single invocation. To persist any setting, drop a `.catmitrc.json` in your repo root (shared with the team) or in your home directory (global):
+
+```json
+{
+  "format": "conventional",
+  "maxLength": 72,
+  "maxBullets": 3,
+  "language": "en"
+}
+```
+
+Environment variables also work: `CATMIT_PROVIDER`, `CATMIT_MODEL`, `CATMIT_FORMAT`, `CATMIT_MAX_BULLETS`, `CATMIT_LANGUAGE`, `OLLAMA_URL`.
 
 ## Supported Providers
 
