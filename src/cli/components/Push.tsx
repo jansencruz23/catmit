@@ -15,9 +15,10 @@ interface PushProps {
   provider?: string;
   model?: string;
   format?: string;
+  maxBullets?: number;
 }
 
-export function Push({ provider, model, format }: PushProps) {
+export function Push({ provider, model, format, maxBullets }: PushProps) {
   const [phase, setPhase] = useState<Phase>('staging');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -33,6 +34,7 @@ export function Push({ provider, model, format }: PushProps) {
       provider,
       model,
       format: format as CommitFormat | undefined,
+      maxBullets,
     });
 
     if (!config.provider) {

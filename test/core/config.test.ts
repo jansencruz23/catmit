@@ -14,7 +14,13 @@ describe('resolveConfig', () => {
     expect(config.maxLength).toBe(72);
     expect(config.includeBody).toBe('auto');
     expect(config.includeBullets).toBe('auto');
+    expect(config.maxBullets).toBe(5);
     expect(config.language).toBe('en');
+  });
+
+  it('applies maxBullets override', () => {
+    const config = resolveConfig({ maxBullets: 3 }, emptyDir);
+    expect(config.maxBullets).toBe(3);
   });
 
   it('applies overrides over defaults', () => {

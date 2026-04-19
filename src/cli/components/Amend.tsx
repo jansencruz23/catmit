@@ -15,10 +15,11 @@ interface AmendProps {
   provider?: string;
   model?: string;
   format?: string;
+  maxBullets?: number;
   apply?: boolean;
 }
 
-export function Amend({ provider, model, format, apply }: AmendProps) {
+export function Amend({ provider, model, format, maxBullets, apply }: AmendProps) {
   const [phase, setPhase] = useState<Phase>('reading');
   const [oldMessage, setOldMessage] = useState('');
   const [newMessage, setNewMessage] = useState('');
@@ -36,6 +37,7 @@ export function Amend({ provider, model, format, apply }: AmendProps) {
       provider,
       model,
       format: format as CommitFormat | undefined,
+      maxBullets,
     });
 
     if (!config.provider) {

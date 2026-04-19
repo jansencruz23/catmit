@@ -15,10 +15,11 @@ interface GenerateProps {
   provider?: string;
   model?: string;
   format?: string;
+  maxBullets?: number;
   commit?: boolean;
 }
 
-export function Generate({ provider, model, format, commit }: GenerateProps) {
+export function Generate({ provider, model, format, maxBullets, commit }: GenerateProps) {
   const [phase, setPhase] = useState<Phase>('reading-diff');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
@@ -35,6 +36,7 @@ export function Generate({ provider, model, format, commit }: GenerateProps) {
       provider,
       model,
       format: format as CommitFormat | undefined,
+      maxBullets,
     });
 
     if (!config.provider) {

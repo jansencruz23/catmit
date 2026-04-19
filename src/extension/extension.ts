@@ -58,6 +58,7 @@ function getVscodeConfig(): Partial<CatmitConfig> {
     maxLength: vsConfig.get('maxLength') || undefined,
     includeBody: vsConfig.get('includeBody') || undefined,
     includeBullets: vsConfig.get('includeBullets') || undefined,
+    maxBullets: vsConfig.get('maxBullets') || undefined,
     language: vsConfig.get('language') || undefined,
   } as Partial<CatmitConfig>;
 }

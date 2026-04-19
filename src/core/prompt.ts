@@ -72,12 +72,13 @@ function buildBodyInstruction(config: CatmitConfig): string {
 }
 
 function buildBulletInstruction(config: CatmitConfig): string {
+  const limit = `Use no more than ${config.maxBullets} bullet${config.maxBullets === 1 ? '' : 's'} total.`;
   switch (config.includeBullets) {
     case 'always':
-      return '- Include a bullet-point summary (using - prefix) in the body listing key changes';
+      return `- Include a bullet-point summary (using - prefix) in the body listing key changes. ${limit}`;
     case 'never':
       return '- Do NOT use bullet points in the body';
     case 'auto':
-      return '- If including a body for multi-file changes, use bullet points (- prefix) to list key changes';
+      return `- If including a body for multi-file changes, use bullet points (- prefix) to list key changes. ${limit}`;
   }
 }

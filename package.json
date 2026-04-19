@@ -180,6 +180,13 @@
           "default": "auto",
           "description": "Include bullet-point summary in body for multi-file changes"
         },
+        "catmit.maxBullets": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 20,
+          "description": "Maximum number of bullet points in the commit body"
+        },
         "catmit.language": {
           "type": "string",
           "default": "en",

@@ -14,6 +14,7 @@ interface PartialConfig {
   maxLength?: number;
   includeBody?: string;
   includeBullets?: string;
+  maxBullets?: number;
   language?: string;
 }
 
@@ -36,12 +37,16 @@ function loadDotfile(cwd?: string): PartialConfig {
 }
 
 function loadEnvVars(): PartialConfig {
+  const maxBulletsRaw = process.env.CATMIT_MAX_BULLETS;
+  const maxBullets = maxBulletsRaw ? Number.parseInt(maxBulletsRaw, 10) : undefined;
+
   return {
     provider: process.env.CATMIT_PROVIDER,
     model: process.env.CATMIT_MODEL,
     apiKey: process.env.OPENAI_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.GOOGLE_API_KEY || process.env.NVIDIA_API_KEY,
     ollamaUrl: process.env.OLLAMA_URL,
     format: process.env.CATMIT_FORMAT,
+    maxBullets: Number.isFinite(maxBullets) ? maxBullets : undefined,
     language: process.env.CATMIT_LANGUAGE,
   };
 }

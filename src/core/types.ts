@@ -15,6 +15,7 @@ export interface CatmitConfig {
   maxLength: number;
   includeBody: BodyOption;
   includeBullets: BodyOption;
+  maxBullets: number;
   language: string;
 }
 
@@ -34,5 +35,6 @@ export const DEFAULT_CONFIG: Omit<CatmitConfig, 'provider'> & { provider: string
   maxLength: 72,
   includeBody: 'auto',
   includeBullets: 'auto',
+  maxBullets: 5,
   language: 'en',
 };

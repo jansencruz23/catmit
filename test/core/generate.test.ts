@@ -11,6 +11,7 @@ const baseConfig: CatmitConfig = {
   maxLength: 72,
   includeBody: 'auto',
   includeBullets: 'auto',
+  maxBullets: 5,
   language: 'en',
 };
 
@@ -61,6 +62,22 @@ describe('buildSystemPrompt', () => {
   it('includes bullet always instruction', () => {
     const prompt = buildSystemPrompt({ ...baseConfig, includeBullets: 'always' });
     expect(prompt).toContain('bullet-point summary');
+  });
+
+  it('respects maxBullets in always bullet mode', () => {
+    const prompt = buildSystemPrompt({ ...baseConfig, includeBullets: 'always', maxBullets: 3 });
+    expect(prompt).toContain('no more than 3 bullets');
+  });
+
+  it('respects maxBullets in auto bullet mode', () => {
+    const prompt = buildSystemPrompt({ ...baseConfig, includeBullets: 'auto', maxBullets: 7 });
+    expect(prompt).toContain('no more than 7 bullets');
+  });
+
+  it('uses singular bullet wording when maxBullets is 1', () => {
+    const prompt = buildSystemPrompt({ ...baseConfig, includeBullets: 'always', maxBullets: 1 });
+    expect(prompt).toContain('no more than 1 bullet');
+    expect(prompt).not.toContain('1 bullets');
   });
 });
 

@@ -19,8 +19,9 @@ program
   .option('-p, --provider <provider>', 'AI provider (openai, anthropic, gemini, ollama)')
   .option('-m, --model <model>', 'Model name')
   .option('-f, --format <format>', 'Commit format (conventional, angular, karma, emoji, semantic, simple)')
+  .option('-b, --max-bullets <n>', 'Maximum number of body bullet points', (v) => Number.parseInt(v, 10))
   .option('-c, --commit', 'Auto-commit with the generated message')
-  .action((opts: Record<string, string | boolean | undefined>) => {
+  .action((opts: Record<string, string | number | boolean | undefined>) => {
     render(
       <Box flexDirection="column">
         <Banner />
@@ -28,6 +29,7 @@ program
           provider={opts.provider as string | undefined}
           model={opts.model as string | undefined}
           format={opts.format as string | undefined}
+          maxBullets={opts.maxBullets as number | undefined}
           commit={opts.commit as boolean | undefined}
         />
       </Box>,
@@ -40,8 +42,9 @@ program
   .option('-p, --provider <provider>', 'AI provider (openai, anthropic, gemini, ollama)')
   .option('-m, --model <model>', 'Model name')
   .option('-f, --format <format>', 'Commit format')
+  .option('-b, --max-bullets <n>', 'Maximum number of body bullet points', (v) => Number.parseInt(v, 10))
   .option('-a, --apply', 'Apply the new message to the last commit')
-  .action((opts: Record<string, string | boolean | undefined>) => {
+  .action((opts: Record<string, string | number | boolean | undefined>) => {
     render(
       <Box flexDirection="column">
         <Banner />
@@ -49,6 +52,7 @@ program
           provider={opts.provider as string | undefined}
           model={opts.model as string | undefined}
           format={opts.format as string | undefined}
+          maxBullets={opts.maxBullets as number | undefined}
           apply={opts.apply as boolean | undefined}
         />
       </Box>,
@@ -61,7 +65,8 @@ program
   .option('-p, --provider <provider>', 'AI provider (openai, anthropic, gemini, ollama)')
   .option('-m, --model <model>', 'Model name')
   .option('-f, --format <format>', 'Commit format')
-  .action((opts: Record<string, string | boolean | undefined>) => {
+  .option('-b, --max-bullets <n>', 'Maximum number of body bullet points', (v) => Number.parseInt(v, 10))
+  .action((opts: Record<string, string | number | boolean | undefined>) => {
     render(
       <Box flexDirection="column">
         <Banner />
@@ -69,6 +74,7 @@ program
           provider={opts.provider as string | undefined}
           model={opts.model as string | undefined}
           format={opts.format as string | undefined}
+          maxBullets={opts.maxBullets as number | undefined}
         />
       </Box>,
     );
